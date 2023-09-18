@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enquiries</title>
+    <style>
+        .error {
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Enquiries</h1>
+    <form id="enquiryForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="enquiry">Enquiry:</label>
+        <textarea id="enquiry" name="enquiry" rows="4" required></textarea><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        const form = document.getElementById("enquiryForm");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            if (validateForm()) {
+                alert("Enquiry successful!");
+                clearForm();
+            } else {
+                alert("Please correct the highlighted errors.");
+            }
+        });
+
+        function validateForm() {
+            let isValid = true;
+
+            const name = document.getElementById("name");
+            const phone = document.getElementById("phone");
+            const email = document.getElementById("email");
+            const enquiry = document.getElementById("enquiry");
+
+            // Validate Name
+            if (name.value === "") {
+                name.classList.add("error");
+                isValid = false;
+            } else {
+                name.classList.remove("error");
+            }
+
+            // Validate Phone Number
+            if (!phone.checkValidity()) {
+                phone.classList.add("error");
+                isValid = false;
+            } else {
+                phone.classList.remove("error");
+            }
+
+            // Validate Email
+            if (!email.checkValidity()) {
+                email.classList.add("error");
+                isValid = false;
+            } else {
+                email.classList.remove("error");
+            }
+
+            // Validate Enquiry
+            if (enquiry.value === "") {
+                enquiry.classList.add("error");
+                isValid = false;
+            } else {
+                enquiry.classList.remove("error");
+            }
+
+            return isValid;
+        }
+
+        function clearForm() {
+            form.reset();
+        }
+    </script>
+</body>
+</html>
